@@ -1,0 +1,79 @@
+/* Estilos personalizados para o Sistema de Currículos - Enlatados Juarez */
+
+/* Reset básico */
+* {
+    box-sizing: border-box;
+}
+
+/* Ajustes gerais para o corpo */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Espaçamento do conteúdo principal considerando a sidebar */
+#main {
+    margin-left: 120px;
+}
+
+/* Responsividade para telas menores */
+@media screen and (max-width: 768px) {
+    .w3-sidebar {
+        display: none;
+    }
+    
+    #main {
+        margin-left: 0;
+    }
+    
+    form[style*="width: 30%"],
+    form[style*="width:30%"] {
+        width: 90% !important;
+    }
+    
+    form[style*="width: 70%"],
+    form[style*="width:70%"] {
+        width: 95% !important;
+    }
+}
+
+/* Ajustes para inputs */
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="email"] {
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+input[type="email"]:focus {
+    box-shadow: 0 0 5px rgba(0, 150, 255, 0.5);
+}
+
+/* Ajustes para botões */
+button {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para tabelas */
+table {
+    margin-top: 20px;
+}
+
+/* Ajustes para links da sidebar */
+.w3-sidebar a {
+    transition: all 0.3s ease;
+}
+
+/* Melhoria visual dos ícones */
+.fa {
+    vertical-align: middle;
+}
