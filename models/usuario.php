@@ -36,8 +36,14 @@ class Usuario{
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        $sql = "SELECT * FROM usuario WHERE cpf = " . $cpf;
+        $sql = "SELECT * FROM usuario WHERE cpf = '" . $cpf . "'";
         $re = $conn->query($sql);
+        
+        if (!$re) {
+            $conn->close();
+            return false;
+        }
+        
         $r = $re->fetch_object();
         if ($r != null) {
             $this->id = $r->idusuario;
@@ -124,6 +130,23 @@ class Usuario{
     public function getSenha()
     {
     return $this->senha;
+    }
+
+    // Método para listar todos os usuários cadastrados
+    public function listaCadastrados()
+    {
+        require_once __DIR__ . '/../helpers/ConexaoBD.php';
+        $con = new ConexaoBD();
+        $conn = $con->conectar();
+        
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        
+        $sql = "SELECT idusuario, nome FROM usuario;";
+        $re = $conn->query($sql);
+        $conn->close();
+        return $re;
     }
 }
 

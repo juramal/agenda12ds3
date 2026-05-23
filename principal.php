@@ -27,6 +27,23 @@ h6 {
 </head>
 <body class="w3-light-grey">
 
+<?php
+// Iniciar sessão e verificar autenticação
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+// Verificar se o usuário está logado
+if (!isset($_SESSION['Usuario'])) {
+    header('Location: login.php');
+    exit();
+}
+
+// Carregar dados do usuário da sessão
+require_once 'models/usuario.php';
+$usuario = unserialize($_SESSION['Usuario']);
+?>
+
 <!-- Sidebar / Barra de Navegação -->
 <nav class="w3-sidebar w3-bar-block w3-center w3-blue">
     <a href="#home" class="w3-bar-item w3-button w3-block n w3-cell w3-hover-light-grey w3-hover-text-cyan w3-text-light-grey">
@@ -70,14 +87,14 @@ h6 {
         <h2 class="w3-text-cyan">Dados Pessoais</h2>
         
         <form action="" method="post" class="w3-row w3-light-grey w3-text-blue w3-margin" style="width:70%;">
-            <input class="w3-input w3-border w3-round-large" name="txtID" type="hidden" value="">
+            <input class="w3-input w3-border w3-round-large" name="txtID" type="hidden" value="<?php echo $usuario->getID(); ?>">
             
             <div class="w3-row w3-section">
                 <div class="w3-col" style="width:11%;">
                     <i class="w3-xxlarge fa fa-user"></i>
                 </div>
                 <div class="w3-rest">
-                    <input class="w3-input w3-border w3-round-large" name="txtNome" type="text" placeholder="Nome Completo" value="">
+                    <input class="w3-input w3-border w3-round-large" name="txtNome" type="text" placeholder="Nome Completo" value="<?php echo $usuario->getNome(); ?>">
                 </div>
             </div>
             
@@ -86,7 +103,7 @@ h6 {
                     <i class="w3-xxlarge fa fa-drivers-license"></i>
                 </div>
                 <div class="w3-rest">
-                    <input class="w3-input w3-border w3-round-large" name="txtCPF" type="text" placeholder="CPF: 33333333333" value="">
+                    <input class="w3-input w3-border w3-round-large" name="txtCPF" type="text" placeholder="CPF: 33333333333" value="<?php echo $usuario->getCPF(); ?>">
                 </div>
             </div>
             
@@ -95,7 +112,7 @@ h6 {
                     <i class="w3-xxlarge fa fa-calendar"></i>
                 </div>
                 <div class="w3-rest">
-                    <input class="w3-input w3-border w3-round-large" name="txtData" type="date" placeholder="dd/mm/aaaa" value="">
+                    <input class="w3-input w3-border w3-round-large" name="txtData" type="date" placeholder="dd/mm/aaaa" value="<?php echo $usuario->getDataNascimento(); ?>">
                 </div>
             </div>
             
@@ -104,7 +121,7 @@ h6 {
                     <i class="w3-xxlarge fa fa-envelope-o"></i>
                 </div>
                 <div class="w3-rest">
-                    <input class="w3-input w3-border w3-round-large" name="txtEmail" type="text" placeholder="Email" value="">
+                    <input class="w3-input w3-border w3-round-large" name="txtEmail" type="text" placeholder="Email" value="<?php echo $usuario->getEmail(); ?>">
                 </div>
             </div>
             

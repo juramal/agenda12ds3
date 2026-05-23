@@ -1,24 +1,20 @@
 <?php
 
 class ConexaoBD {
-    private $serverName =
-    "localhost"; private
-    $userName = "root"; private
-    $password = "password"; private
-    $dbName = "projeto_final";
+    private $serverName = "localhost";
+    private $userName = "root";
+    private $password = ""; // XAMPP padrão vem sem senha
+    private $dbName = "projeto_final";
 
     public function conectar() {
-        try{
-            $conn = new mysqli($this->serverName, $this->userName, $this->password, $this->dbName);
-
+        $conn = new mysqli($this->serverName, $this->userName, $this->password, $this->dbName);
+        
+        if ($conn->connect_error) {
+            die("Erro ao conectar: " . $conn->connect_error);
         }
-        catch (Exception $e) {
-            die("Erro ao conectar: " . $e->getMessage());
-        }
+        
         return $conn;
     }
-
 }
-
 
 ?>
