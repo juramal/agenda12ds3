@@ -86,7 +86,7 @@ $usuario = unserialize($_SESSION['Usuario']);
     <div class="w3-padding-128 w3-content w3-text-grey" id="dPessoais">
         <h2 class="w3-text-cyan">Dados Pessoais</h2>
         
-        <form action="" method="post" class="w3-row w3-light-grey w3-text-blue w3-margin" style="width:70%;">
+        <form action="Controller/navegacao.php" method="post" class="w3-row w3-light-grey w3-text-blue w3-margin" style="width:70%;">
             <input class="w3-input w3-border w3-round-large" name="txtID" type="hidden" value="<?php echo $usuario->getID(); ?>">
             
             <div class="w3-row w3-section">
@@ -137,7 +137,7 @@ $usuario = unserialize($_SESSION['Usuario']);
     <div class="w3-padding-128 w3-content w3-text-grey" id="formacao">
         <h2 class="w3-text-cyan">Formação</h2>
         
-        <form action="" method="post" class="w3-row w3-light-grey w3-text-blue w3-margin" style="width:70%;">
+        <form action="Controller/navegacao.php" method="post" class="w3-row w3-light-grey w3-text-blue w3-margin" style="width:70%;">
             <div class="w3-row w3-center">
                 <div class="w3-col" style="width:50%;"> 
                     Data Inicial
@@ -195,7 +195,33 @@ $usuario = unserialize($_SESSION['Usuario']);
                         <th>Apagar</th>
                     </tr>
                 </thead>
-                <!-- Código que será incluído na próxima agenda -->
+                <tbody>
+                    <?php
+                    require_once 'models/FormacaoAcad.php';
+                    $formacao = new FormacaoAcad();
+                    $resultado = $formacao->listaFormacoes($usuario->getID());
+                    
+                    if ($resultado && $resultado->num_rows > 0) {
+                        while ($row = $resultado->fetch_assoc()) {
+                            echo '<tr>';
+                            echo '<td>' . date('d/m/Y', strtotime($row['inicio'])) . '</td>';
+                            echo '<td>' . date('d/m/Y', strtotime($row['fim'])) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['descricao']) . '</td>';
+                            echo '<td>';
+                            echo '<form action="Controller/navegacao.php" method="post" style="display:inline;">';
+                            echo '<input type="hidden" name="idFormacao" value="' . $row['idformacaoAcademica'] . '">';
+                            echo '<button type="submit" name="btnExcluirFormacao" class="w3-button w3-red w3-round">';
+                            echo '<i class="fa fa-trash"></i>';
+                            echo '</button>';
+                            echo '</form>';
+                            echo '</td>';
+                            echo '</tr>';
+                        }
+                    } else {
+                        echo '<tr><td colspan="4" class="w3-text-grey">Nenhuma formação cadastrada</td></tr>';
+                    }
+                    ?>
+                </tbody>
             </table>
         </div>
     </div>
@@ -204,7 +230,7 @@ $usuario = unserialize($_SESSION['Usuario']);
     <div class="w3-padding-128 w3-content w3-text-grey" id="eProfissional">
         <h2 class="w3-text-cyan">Experiência Profissional</h2>
         
-        <form action="" method="post" class="w3-row w3-light-grey w3-text-blue w3-margin" style="width:70%;">
+        <form action="Controller/navegacao.php" method="post" class="w3-row w3-light-grey w3-text-blue w3-margin" style="width:70%;">
             <div class="w3-row w3-center">
                 <div class="w3-col" style="width:50%;"> 
                     Data Inicial
@@ -272,7 +298,34 @@ $usuario = unserialize($_SESSION['Usuario']);
                         <th>Apagar</th>
                     </tr>
                 </thead>
-                <!-- Código que será incluído na próxima agenda -->
+                <tbody>
+                    <?php
+                    require_once 'models/ExperienciaProfissional.php';
+                    $experiencia = new ExperienciaProfissional();
+                    $resultado = $experiencia->listaExperiencias($usuario->getID());
+                    
+                    if ($resultado && $resultado->num_rows > 0) {
+                        while ($row = $resultado->fetch_assoc()) {
+                            echo '<tr>';
+                            echo '<td>' . date('d/m/Y', strtotime($row['inicio'])) . '</td>';
+                            echo '<td>' . date('d/m/Y', strtotime($row['fim'])) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['empresa']) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['descricao']) . '</td>';
+                            echo '<td>';
+                            echo '<form action="Controller/navegacao.php" method="post" style="display:inline;">';
+                            echo '<input type="hidden" name="idExperiencia" value="' . $row['idexperienciaprofissional'] . '">';
+                            echo '<button type="submit" name="btnExcluirEP" class="w3-button w3-red w3-round">';
+                            echo '<i class="fa fa-trash"></i>';
+                            echo '</button>';
+                            echo '</form>';
+                            echo '</td>';
+                            echo '</tr>';
+                        }
+                    } else {
+                        echo '<tr><td colspan="5" class="w3-text-grey">Nenhuma experiência cadastrada</td></tr>';
+                    }
+                    ?>
+                </tbody>
             </table>
         </div>
     </div>
@@ -281,7 +334,7 @@ $usuario = unserialize($_SESSION['Usuario']);
     <div class="w3-padding-128 w3-content w3-text-grey" id="outrasFormacoes">
         <h2 class="w3-text-cyan">Outras Formações</h2>
         
-        <form action="" method="post" class="w3-row w3-light-grey w3-text-blue w3-margin" style="width:70%;">
+        <form action="Controller/navegacao.php" method="post" class="w3-row w3-light-grey w3-text-blue w3-margin" style="width:70%;">
             <div class="w3-row w3-center">
                 <div class="w3-col" style="width:50%;"> 
                     Data Inicial
@@ -339,7 +392,33 @@ $usuario = unserialize($_SESSION['Usuario']);
                         <th>Apagar</th>
                     </tr>
                 </thead>
-                <!-- Código que será incluído na próxima agenda -->
+                <tbody>
+                    <?php
+                    require_once 'models/OutrasFormacoes.php';
+                    $outraFormacao = new OutrasFormacoes();
+                    $resultado = $outraFormacao->listaOutrasFormacoes($usuario->getID());
+                    
+                    if ($resultado && $resultado->num_rows > 0) {
+                        while ($row = $resultado->fetch_assoc()) {
+                            echo '<tr>';
+                            echo '<td>' . date('d/m/Y', strtotime($row['inicio'])) . '</td>';
+                            echo '<td>' . date('d/m/Y', strtotime($row['fim'])) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['descricao']) . '</td>';
+                            echo '<td>';
+                            echo '<form action="Controller/navegacao.php" method="post" style="display:inline;">';
+                            echo '<input type="hidden" name="idOutraFormacao" value="' . $row['idoutrasformacoes'] . '">';
+                            echo '<button type="submit" name="btnExcluirOF" class="w3-button w3-red w3-round">';
+                            echo '<i class="fa fa-trash"></i>';
+                            echo '</button>';
+                            echo '</form>';
+                            echo '</td>';
+                            echo '</tr>';
+                        }
+                    } else {
+                        echo '<tr><td colspan="4" class="w3-text-grey">Nenhuma formação cadastrada</td></tr>';
+                    }
+                    ?>
+                </tbody>
             </table>
         </div>
     </div>
